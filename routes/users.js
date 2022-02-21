@@ -19,6 +19,8 @@ router.get("/:id", getUser, (req, res) => {
   res.send(res.user);
 });
 
+//Delete a user 
+
 router.delete("/:id", getUser, async (req, res) => {
   try {
     await res.user.remove();
@@ -27,6 +29,8 @@ router.delete("/:id", getUser, async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+
+//Add a user 
 
 router.post("/", async (req, res) => {
   const user = new User({
@@ -43,6 +47,8 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Update a user
+
 router.patch("/:id", getUser, async (req, res) => {
   if (req.body.name != null) res.user.name = req.body.name;
   if (req.body.email != null) res.user.email = req.body.email;
@@ -55,6 +61,7 @@ router.patch("/:id", getUser, async (req, res) => {
   }
 });
 
+// middleware
 async function getUser(req, res, next) {
   try {
     user = await User.findById(req.params.id);
